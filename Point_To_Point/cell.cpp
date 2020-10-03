@@ -2,8 +2,7 @@
 
 cell& cell::operator=(const cell& a)
 {
-	int num = a.x_;
-	this->setX(num);
+	x_ = a.x_;
 	y_ = a.y_;
 	coord_ = a.coord_;
 	val_ = a.val_;

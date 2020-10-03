@@ -115,13 +115,21 @@ void cMain::OnButtonClicked(wxCommandEvent &evt)
 		sp.setCells(*source, *target);
 		sp.setGrid(dataGrid);
 		sp.setWidth(nFieldWidth);
-		std::vector<int> path = sp.bfs();
+		std::vector<int> path = sp.dfs();
 		for (auto e : path)
 		{
-			btn[e]->SetOwnBackgroundColour("Yellow");
-			btn[e]->SetLabel("BFS");
+			btn[e]->SetOwnBackgroundColour("Blue");
+			btn[e]->SetLabel("DFS");
 			btn[e]->Enable(false);
 		}
+
+		//path = sp.bfs();
+		//for (auto e : path)
+		//{
+		//	btn[e]->SetOwnBackgroundColour("Yellow");
+		//	btn[e]->SetLabel("BFS");
+		//	btn[e]->Enable(false);
+		//}
 		delete temp;
 		//list = new wxListBox(this, wxID_ANY, wxPoint(10, 100), wxSize(100, 100));
 		//list->AppendString(std::to_string(path));

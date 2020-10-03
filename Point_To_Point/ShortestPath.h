@@ -23,8 +23,9 @@ public:
 
 	// Methods
 	bool isInsideGrid(int i, int j);
-	int dijkstra();
-	int dfs();
+	std::vector<int> dijkstra();
+	std::vector<int> dfs();
+	void rdfs(std::unordered_set<int>& visited, int currCoord);
 	std::vector<int> bfs();
 };
 
