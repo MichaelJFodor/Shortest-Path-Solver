@@ -43,7 +43,7 @@ void cMain::InitDataGrid()
 	}
 }
 
-cMain::cMain() : wxFrame(nullptr, wxID_ANY, "JustATitle.com - wx Widgets")
+cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Shortest Path Solver - wx Widgets")
 {
 	btn = new wxButton*[nFieldWidth * nFieldHeight];
 	wxGridSizer *grid = new wxGridSizer(nFieldWidth, nFieldHeight, 0, 0);
