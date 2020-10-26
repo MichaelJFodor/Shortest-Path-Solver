@@ -9,7 +9,6 @@ private:
 	int width_;
 	cell src_;
 	cell tgt_;
-
 	
 public:
 	// Constructors
@@ -24,6 +23,7 @@ public:
 	// Methods
 	bool isInsideGrid(int i, int j);
 	std::vector<int> dijkstra();
+	std::vector<int> astar();
 	std::vector<int> dfs();
 	void rdfs(std::unordered_set<int>& visited, int currCoord);
 	std::vector<int> bfs();

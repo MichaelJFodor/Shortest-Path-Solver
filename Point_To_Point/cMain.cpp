@@ -2,12 +2,13 @@
 #pragma once
 wxBEGIN_EVENT_TABLE(cMain, wxFrame) // Name of class, and base class
 	EVT_BUTTON(10001, OnButtonClicked)	// 10001 is the button ID
-	EVT_MENU(100, runBFS)
-	EVT_MENU(101, OnButtonClicked)
-	EVT_MENU(102, OnButtonClicked)
-	EVT_MENU(103, OnButtonClicked)
+	EVT_MENU(100, setBFS)
+	EVT_MENU(101, setDFS)
+	EVT_MENU(102, setDijkstra)
+	EVT_MENU(103, setASTAR)
 wxEND_EVENT_TABLE()
 
+#pragma region overload
 bool operator <(cell& a, cell& b)
 {
 	if (a.getVal() == b.getVal())
@@ -29,6 +30,11 @@ bool operator !=(cell& a, cell& b)
 	return (a.getX() != b.getX() || a.getY() != b.getY());
 }
 
+#pragma endregion
+
+#pragma region ctors
+
+// Constructor Helper Functions
 void cMain::InitStatusBar()
 {
 	m_pMenuBar = new wxMenuBar();
@@ -43,9 +49,12 @@ void cMain::InitStatusBar()
 
 	m_pMenuBar->Append(m_pFileMenu, _T("&Change Algorithm"));
 	SetMenuBar(m_pMenuBar);
+
+	// Set Algorithm
+	algorithm algo = BFS;
 }
 
-void cMain::InitDataGrid()
+void cMain::generateDataValues()
 {
 	srand(time(NULL));
 	std::vector<int> temp;
@@ -63,14 +72,11 @@ void cMain::InitDataGrid()
 	}
 }
 
-cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Shortest Path Solver - wx Widgets")
+void cMain::createButtonGrid()
 {
-	InitStatusBar();
-
 	btn = new wxButton*[nFieldWidth * nFieldHeight];
 	wxGridSizer *grid = new wxGridSizer(nFieldWidth, nFieldHeight, 0, 0);
 	nField = new int[nFieldWidth * nFieldHeight];
-	InitDataGrid();
 
 	for (int n = 0; n < nFieldWidth; n++)
 	{
@@ -86,16 +92,32 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Shortest Path Solver - wx Widgets")
 	}
 
 	this->SetSizer(grid);
-	
-	grid->Layout();
 
+	grid->Layout();
 }
 
+// Constuctor
+cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Shortest Path Solver - wx Widgets")
+{
+	// Create Status Bar
+	InitStatusBar();
+
+	// Assign grid with numbers
+	generateDataValues();
+
+	// Create grid of N x N buttons
+	createButtonGrid();
+}
+
+// Destructor
 cMain::~cMain()
 {
 	delete[]btn;
 }
 
+#pragma endregion
+
+#pragma region algorithm setup
 void cMain::setSourceData(cell &temp)
 {
 	source = &temp;
@@ -118,6 +140,63 @@ void cMain::setTargetData(cell &temp)
 	bLastClick = true;
 }
 
+void cMain::runAlgorithm()
+{
+	std::string algoName = "";
+	wxColour* algoColor;
+	std::vector<int> path;
+
+	list = new wxListBox(this, wxID_ANY, wxPoint(10, 100), wxSize(100, 100));
+	switch (algo)
+	{
+	case BFS:
+	{
+		algoName = "BFS";
+		algoColor = new wxColour("Yellow");
+		path = sp.bfs();
+		break;
+	}
+	case DFS:
+	{
+		algoName = "DFS";
+		algoColor = new wxColour("Blue");
+		path = sp.dfs();
+		break;
+	}
+	case DIJKSTRA:
+	{
+		algoName = "Dijkstra";
+		algoColor = new wxColour("Purple");
+		path = sp.dijkstra();
+		break;
+	}
+	case ASTAR:
+	{
+		algoName = "A*";
+		algoColor = new wxColour("Pink");
+		path = sp.astar();
+		break;
+	}
+	default:
+	{
+		algoName = "BFS";
+		algoColor = new wxColour("Yellow");
+		path = sp.bfs();
+		break;
+	}
+	}
+
+	for (auto e : path)
+	{
+		btn[e]->SetOwnBackgroundColour(*algoColor);
+		btn[e]->SetLabel(algoName);
+		btn[e]->Enable(false);
+		list->AppendString(std::to_string(e));
+	}
+}
+
+#pragma endregion
+
 void cMain::OnButtonClicked(wxCommandEvent &evt)
 {
 	int coord = 0;
@@ -138,33 +217,34 @@ void cMain::OnButtonClicked(wxCommandEvent &evt)
 		sp.setCells(*source, *target);
 		sp.setGrid(dataGrid);
 		sp.setWidth(nFieldWidth);
-		//std::vector<int> path = sp.dfs();
-		//for (auto e : path)
-		//{
-		//	btn[e]->SetOwnBackgroundColour("Blue");
-		//	btn[e]->SetLabel("DFS");
-		//	btn[e]->Enable(false);
-		//}
 
-
+		runAlgorithm();
 		delete temp;
 	}	
-	
 
 	evt.Skip();
 }
 
-void cMain::runBFS(wxCommandEvent &evt)
+#pragma region status bar options 
+// Status Bar Options
+void cMain::setBFS(wxCommandEvent &evt)
 {
-	std::vector<int> path = sp.bfs();
-	list = new wxListBox(this, wxID_ANY, wxPoint(10, 100), wxSize(100, 100));
-	for (auto e : path)
-	{
-		btn[e]->SetOwnBackgroundColour("Yellow");
-		btn[e]->SetLabel("BFS");
-		btn[e]->Enable(false);
-		list->AppendString(std::to_string(e));
-	}
-	
-	list->AppendString(("Hello world"));
+	algo = BFS;
 }
+
+void cMain::setDFS(wxCommandEvent &evt)
+{
+	algo = DFS;
+}
+
+void cMain::setDijkstra(wxCommandEvent &evt)
+{
+	algo = DIJKSTRA;
+}
+
+void cMain::setASTAR(wxCommandEvent &evt)
+{
+	algo = ASTAR;
+}
+
+# pragma endregion

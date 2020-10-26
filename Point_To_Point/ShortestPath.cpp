@@ -1,6 +1,6 @@
 #include "ShortestPath.h"
 
-
+# pragma region ctors
 ShortestPath::ShortestPath() 
 {}
 
@@ -25,12 +25,24 @@ void ShortestPath::setGrid(std::vector<std::vector<int>> dataGrid)
 	dataGrid_ = dataGrid;
 }
 
+#pragma endregion
+
+#pragma region helper functions
 bool ShortestPath::isInsideGrid(int i, int j)
 {
 	return (i >= 0 && i < width_ && j >= 0 && j < width_);
 }
 
+#pragma endregion
+
+#pragma region algorithms
 std::vector<int> ShortestPath::dijkstra()
+{
+	std::vector<int> answer;
+	return answer;
+}
+
+std::vector<int> ShortestPath::astar()
 {
 	std::vector<int> answer;
 	return answer;
@@ -167,3 +179,6 @@ std::vector<int> ShortestPath::bfs()
 	}
 	return coord;
 }
+#pragma endregion
+
+

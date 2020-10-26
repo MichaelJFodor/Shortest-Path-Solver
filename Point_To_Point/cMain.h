@@ -24,6 +24,8 @@ public:
 	bool bLastClick = false;
 
 	// Shortest Path
+	enum algorithm {BFS, DFS, DIJKSTRA, ASTAR} algo;
+	void runAlgorithm();
 	cell *source = nullptr;
 	cell *target = nullptr;
 	ShortestPath sp;
@@ -36,10 +38,14 @@ public:
 	wxColour* lastColor = new wxColour("Red");
 
 	// GUI Methods
-	void InitDataGrid();
+	void generateDataValues();
 	void InitStatusBar();
+	void createButtonGrid();
 	void OnButtonClicked(wxCommandEvent &evt);
-	void runBFS(wxCommandEvent &evt);
+	void setDFS(wxCommandEvent &evt);
+	void setBFS(wxCommandEvent &evt);
+	void setDijkstra(wxCommandEvent &evt);
+	void setASTAR(wxCommandEvent &evt);
 
 	wxMenuBar *m_pMenuBar;
 	wxMenu *m_pFileMenu;
@@ -50,7 +56,7 @@ protected:
 	wxDECLARE_EVENT_TABLE();
 };
 
-bool operator < (cell& a, cell& b);
+bool operator <(cell& a, cell& b);
 bool operator !=(cell& a, cell& b);
 bool operator ==(cell& a, cell& b);
 
