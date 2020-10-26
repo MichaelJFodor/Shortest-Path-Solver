@@ -1,5 +1,6 @@
 #pragma once
 #include "cApp.h"
+
 wxIMPLEMENT_APP(cApp);
 
 
@@ -14,7 +15,8 @@ cApp::~cApp()
 
 bool cApp::OnInit()
 {
-	m_frame_1 = new cMain();
-	m_frame_1->Show();
+	mainWindow = new cMain();
+	mainWindow->Show();
+	SetTopWindow(mainWindow);
 	return true;
 }

@@ -1,7 +1,7 @@
 #pragma once
-
 #include "wx/wx.h"
 #include "cMain.h"
+#include "wx/wxprec.h"
 
 class cApp : public wxApp
 {
@@ -11,9 +11,8 @@ public:
 	~cApp();
 
 private:
-	cMain* m_frame_1 = nullptr;
+	cMain* mainWindow = nullptr;
 
 public:
 	virtual bool OnInit();
 };
-

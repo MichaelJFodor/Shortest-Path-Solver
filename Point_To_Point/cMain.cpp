@@ -1,7 +1,11 @@
 #include "cMain.h"
 #pragma once
 wxBEGIN_EVENT_TABLE(cMain, wxFrame) // Name of class, and base class
-EVT_BUTTON(10001, OnButtonClicked)	// 10001 is the button ID
+	EVT_BUTTON(10001, OnButtonClicked)	// 10001 is the button ID
+	EVT_MENU(100, runBFS)
+	EVT_MENU(101, OnButtonClicked)
+	EVT_MENU(102, OnButtonClicked)
+	EVT_MENU(103, OnButtonClicked)
 wxEND_EVENT_TABLE()
 
 bool operator <(cell& a, cell& b)
@@ -25,6 +29,22 @@ bool operator !=(cell& a, cell& b)
 	return (a.getX() != b.getX() || a.getY() != b.getY());
 }
 
+void cMain::InitStatusBar()
+{
+	m_pMenuBar = new wxMenuBar();
+	// File Menu
+	m_pFileMenu = new wxMenu();
+	m_pFileMenu->Append(100, _T("&BFS"));
+	m_pFileMenu->Append(101, _T("&DFS"));
+	m_pFileMenu->Append(102, _T("&A*"));
+	m_pFileMenu->Append(103, _T("&Dijkstra"));
+	m_pFileMenu->AppendSeparator();
+	m_pFileMenu->Append(wxID_EXIT, _T("&Quit"));
+
+	m_pMenuBar->Append(m_pFileMenu, _T("&Change Algorithm"));
+	SetMenuBar(m_pMenuBar);
+}
+
 void cMain::InitDataGrid()
 {
 	srand(time(NULL));
@@ -45,6 +65,8 @@ void cMain::InitDataGrid()
 
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Shortest Path Solver - wx Widgets")
 {
+	InitStatusBar();
+
 	btn = new wxButton*[nFieldWidth * nFieldHeight];
 	wxGridSizer *grid = new wxGridSizer(nFieldWidth, nFieldHeight, 0, 0);
 	nField = new int[nFieldWidth * nFieldHeight];
@@ -64,6 +86,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Shortest Path Solver - wx Widgets")
 	}
 
 	this->SetSizer(grid);
+	
 	grid->Layout();
 
 }
@@ -115,26 +138,33 @@ void cMain::OnButtonClicked(wxCommandEvent &evt)
 		sp.setCells(*source, *target);
 		sp.setGrid(dataGrid);
 		sp.setWidth(nFieldWidth);
-		std::vector<int> path = sp.dfs();
-		for (auto e : path)
-		{
-			btn[e]->SetOwnBackgroundColour("Blue");
-			btn[e]->SetLabel("DFS");
-			btn[e]->Enable(false);
-		}
-
-		//path = sp.bfs();
+		//std::vector<int> path = sp.dfs();
 		//for (auto e : path)
 		//{
-		//	btn[e]->SetOwnBackgroundColour("Yellow");
-		//	btn[e]->SetLabel("BFS");
+		//	btn[e]->SetOwnBackgroundColour("Blue");
+		//	btn[e]->SetLabel("DFS");
 		//	btn[e]->Enable(false);
 		//}
+
+
 		delete temp;
-		//list = new wxListBox(this, wxID_ANY, wxPoint(10, 100), wxSize(100, 100));
-		//list->AppendString(std::to_string(path));
 	}	
 	
 
 	evt.Skip();
+}
+
+void cMain::runBFS(wxCommandEvent &evt)
+{
+	std::vector<int> path = sp.bfs();
+	list = new wxListBox(this, wxID_ANY, wxPoint(10, 100), wxSize(100, 100));
+	for (auto e : path)
+	{
+		btn[e]->SetOwnBackgroundColour("Yellow");
+		btn[e]->SetLabel("BFS");
+		btn[e]->Enable(false);
+		list->AppendString(std::to_string(e));
+	}
+	
+	list->AppendString(("Hello world"));
 }

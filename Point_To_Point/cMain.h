@@ -3,6 +3,7 @@
 #include <iostream>
 #include "ShortestPath.h"
 #include "wx/wx.h"
+#include "wx/wxprec.h"
 
 class cMain : public wxFrame
 {
@@ -34,11 +35,18 @@ public:
 	wxColour* startColor = new wxColour("Green");
 	wxColour* lastColor = new wxColour("Red");
 
-
-
 	// GUI Methods
 	void InitDataGrid();
+	void InitStatusBar();
 	void OnButtonClicked(wxCommandEvent &evt);
+	void runBFS(wxCommandEvent &evt);
+
+	wxMenuBar *m_pMenuBar;
+	wxMenu *m_pFileMenu;
+	wxMenu *m_pHelpMenu;
+
+
+protected:
 	wxDECLARE_EVENT_TABLE();
 };
 
