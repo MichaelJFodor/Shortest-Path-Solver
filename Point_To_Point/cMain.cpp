@@ -42,8 +42,8 @@ void cMain::InitStatusBar()
 	m_pFileMenu = new wxMenu();
 	m_pFileMenu->Append(100, _T("&BFS"));
 	m_pFileMenu->Append(101, _T("&DFS"));
-	m_pFileMenu->Append(102, _T("&A*"));
-	m_pFileMenu->Append(103, _T("&Dijkstra"));
+	m_pFileMenu->Append(102, _T("&Dijkstra"));
+	m_pFileMenu->Append(103, _T("&A*"));
 	m_pFileMenu->AppendSeparator();
 	m_pFileMenu->Append(wxID_EXIT, _T("&Quit"));
 
@@ -149,41 +149,41 @@ void cMain::runAlgorithm()
 	list = new wxListBox(this, wxID_ANY, wxPoint(10, 100), wxSize(100, 100));
 	switch (algo)
 	{
-	case BFS:
-	{
-		algoName = "BFS";
-		algoColor = new wxColour("Yellow");
-		path = sp.bfs();
-		break;
-	}
-	case DFS:
-	{
-		algoName = "DFS";
-		algoColor = new wxColour("Blue");
-		path = sp.dfs();
-		break;
-	}
-	case DIJKSTRA:
-	{
-		algoName = "Dijkstra";
-		algoColor = new wxColour("Purple");
-		path = sp.dijkstra();
-		break;
-	}
-	case ASTAR:
-	{
-		algoName = "A*";
-		algoColor = new wxColour("Pink");
-		path = sp.astar();
-		break;
-	}
-	default:
-	{
-		algoName = "BFS";
-		algoColor = new wxColour("Yellow");
-		path = sp.bfs();
-		break;
-	}
+		case BFS:
+		{
+			algoName = "BFS";
+			algoColor = new wxColour("Yellow");
+			path = sp.bfs();
+			break;
+		}
+		case DFS:
+		{
+			algoName = "DFS";
+			algoColor = new wxColour("Blue");
+			path = sp.dfs();
+			break;
+		}
+		case DIJKSTRA:
+		{
+			algoName = "Dijkstra";
+			algoColor = new wxColour("Purple");
+			path = sp.dijkstra();
+			break;
+		}
+		case ASTAR:
+		{
+			algoName = "A*";
+			algoColor = new wxColour("Pink");
+			path = sp.astar();
+			break;
+		}
+		default:
+		{
+			algoName = "BFS";
+			algoColor = new wxColour("Yellow");
+			path = sp.bfs();
+			break;
+		}
 	}
 
 	for (auto e : path)
@@ -216,7 +216,6 @@ void cMain::OnButtonClicked(wxCommandEvent &evt)
 		sp.setWidth(nFieldWidth);
 		sp.setCells(*source, *target);
 		sp.setGrid(dataGrid);
-		sp.setWidth(nFieldWidth);
 
 		runAlgorithm();
 		delete temp;

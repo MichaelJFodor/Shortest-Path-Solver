@@ -38,14 +38,12 @@ bool ShortestPath::isInsideGrid(int i, int j)
 #pragma region algorithms
 std::vector<int> ShortestPath::dijkstra()
 {
-	std::vector<int> answer;
-	return answer;
+	return bfs();
 }
 
 std::vector<int> ShortestPath::astar()
 {
-	std::vector<int> answer;
-	return answer;
+	return bfs();
 }
 
 std::vector<int> ShortestPath::dfs()
@@ -55,8 +53,10 @@ std::vector<int> ShortestPath::dfs()
 	std::vector<int> yDir = { 0, 1, 0, -1 };
 	std::vector<int> coord;
 	std::unordered_set<int> visited;
-	cell temp = NULL;
+	
 	rdfs(visited, src_.getCoord());
+
+	cell temp = NULL;
 	temp = tgt_;
 	temp.setCoord(tgt_.getCoord());
 	while (temp.getCoord() != src_.getCoord())
@@ -86,7 +86,7 @@ void ShortestPath::rdfs(std::unordered_set<int>& visited, int currCoord)
 	else
 	{
 		int prev = currCoord;
-		currX += -1;
+		currX += -1; //-1 0
 		currY += 0;
 		temp.setX(currX);
 		temp.setY(currY);
@@ -97,7 +97,7 @@ void ShortestPath::rdfs(std::unordered_set<int>& visited, int currCoord)
 			path_[temp.getCoord()] = currCoord;
 		}
 
-		currX += 0;
+		currX += 1; //0 1
 		currY += 1;
 		temp.setX(currX);
 		temp.setY(currY);
@@ -108,8 +108,8 @@ void ShortestPath::rdfs(std::unordered_set<int>& visited, int currCoord)
 			path_[temp.getCoord()] = currCoord;
 		}
 
-		currX += 1;
-		currY += 0;
+		currX += 1; //1 0
+		currY += -1;
 		temp.setX(currX);
 		temp.setY(currY);
 		temp.calculateCoord(width_);
@@ -119,7 +119,7 @@ void ShortestPath::rdfs(std::unordered_set<int>& visited, int currCoord)
 			path_[temp.getCoord()] = currCoord;
 		}
 
-		currX += 0;
+		currX += -1; //0 -1
 		currY += -1;
 		temp.setX(currX);
 		temp.setY(currY);

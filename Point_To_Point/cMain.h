@@ -5,6 +5,10 @@
 #include "wx/wx.h"
 #include "wx/wxprec.h"
 
+// Add black boxes for illegal cells
+// Create Dijkstra and A* algorithms
+// Optimize DFS a little
+
 class cMain : public wxFrame
 {
 public:
