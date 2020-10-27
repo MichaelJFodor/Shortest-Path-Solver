@@ -20,7 +20,7 @@ void ShortestPath::setCells(cell &src, cell &tgt)
 	tgt_ = tgt;
 }
 
-void ShortestPath::setGrid(std::vector<std::vector<int>> dataGrid)
+void ShortestPath::setGrid(std::vector<int> dataGrid)
 {
 	dataGrid_ = dataGrid;
 }
@@ -38,6 +38,15 @@ bool ShortestPath::isInsideGrid(int i, int j)
 #pragma region algorithms
 std::vector<int> ShortestPath::dijkstra()
 {
+	std::unordered_map<int, int> prev;
+	std::vector<int> cost(dataGrid_.size(), INT_MAX);
+	for (int i = 0; i < width_; i++)
+	{
+		for (int j = 0; j < width_; j++)
+		{
+			prev[j * width_ + i] = 0;
+		}
+	}
 	return bfs();
 }
 

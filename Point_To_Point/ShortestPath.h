@@ -5,7 +5,7 @@ class ShortestPath
 {
 private:
 	std::map<int, int> path_;
-	std::vector<std::vector<int>> dataGrid_;
+	std::vector<int> dataGrid_;
 	int width_;
 	cell src_;
 	cell tgt_;
@@ -18,7 +18,7 @@ public:
 	// Setters
 	void setWidth(int width);
 	void setCells(cell &src, cell &tgt);
-	void setGrid(std::vector<std::vector<int>> dataGrid);
+	void setGrid(std::vector<int> dataGrid);
 
 	// Methods
 	bool isInsideGrid(int i, int j);

@@ -33,7 +33,7 @@ public:
 	cell *source = nullptr;
 	cell *target = nullptr;
 	ShortestPath sp;
-	std::vector<std::vector<int>> dataGrid;
+	std::vector<int> dataGrid;
 
 	// Methods
 	void setSourceData(cell &temp);
