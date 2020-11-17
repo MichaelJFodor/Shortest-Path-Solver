@@ -20,8 +20,8 @@ public:
 	wxListBox* list;
 	wxButton **btn;
 
-	int nFieldWidth = 20;
-	int nFieldHeight = 20;
+	int nFieldWidth = 40;
+	int nFieldHeight = nFieldWidth;
 	int *nField = nullptr;
 	bool bStartClick = true;
 	bool bFirstClick = true;

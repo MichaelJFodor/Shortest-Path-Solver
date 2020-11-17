@@ -43,6 +43,7 @@ public:
 	void setVal(const int val);
 	void setX(const int x);
 	void setY(const int y);
+	void setXY(const int x, const int y);
 
 	// Overloads
 	cell& operator = (const cell& a);

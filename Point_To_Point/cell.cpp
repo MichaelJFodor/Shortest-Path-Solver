@@ -57,6 +57,12 @@ void cell::setY(const int y)
 	y_ = y;
 }
 
+void cell::setXY(const int x, const int y)
+{
+	x_ = x;
+	y_ = y;
+}
+
 void cell::setCoord(int coord)
 {
 	coord_ = coord;

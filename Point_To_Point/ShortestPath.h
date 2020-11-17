@@ -21,7 +21,10 @@ public:
 	void setGrid(std::vector<int> dataGrid);
 
 	// Methods
+	std::vector<int> extractBfsPath(cell& temp);
+	int initNode(cell& temp, int front, int i);
 	bool isInsideGrid(int i, int j);
+
 	std::vector<int> dijkstra();
 	std::vector<int> astar();
 	std::vector<int> dfs();

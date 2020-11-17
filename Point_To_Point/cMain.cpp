@@ -57,9 +57,7 @@ void cMain::InitStatusBar()
 void cMain::generateDataValues()
 {
 	srand(time(NULL));
-	//std::vector<int> temp(nFieldWidth*nFieldHeight, 0);
 	int val = 0;
-
 	for (int i = 0; i < nFieldWidth; i++)
 	{
 		for (int j = 0; j < nFieldHeight; j++)
@@ -67,8 +65,6 @@ void cMain::generateDataValues()
 			val = (rand() % 101) + 1;
 			dataGrid.push_back(val);
 		}
-		//dataGrid.push_back(temp);
-		//temp.clear();
 	}
 }
 
@@ -83,7 +79,7 @@ void cMain::createButtonGrid()
 		for (int m = 0; m < nFieldHeight; m++)
 		{
 			btn[m * nFieldHeight + n] = new wxButton(this, 10000 + (m * nFieldWidth + n));
-			btn[m * nFieldHeight + n]->SetLabel(std::to_string(dataGrid[m * nFieldHeight + n]));
+			//btn[m * nFieldHeight + n]->SetLabel(std::to_string(dataGrid[m * nFieldHeight + n]));
 			grid->Add(btn[m * nFieldWidth + n], 1, wxEXPAND | wxALL);
 
 			btn[m * nFieldHeight + n]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonClicked, this);
@@ -103,7 +99,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Shortest Path Solver - wx Widgets")
 	InitStatusBar();
 
 	// Assign grid with numbers
-	generateDataValues();
+	//generateDataValues();
 
 	// Create grid of N x N buttons
 	createButtonGrid();
