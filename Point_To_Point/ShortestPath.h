@@ -1,6 +1,6 @@
 #pragma once
 #include "cell.h"
-
+#include "wx/wx.h"
 class ShortestPath
 {
 private:
@@ -29,6 +29,6 @@ public:
 	std::vector<int> astar();
 	std::vector<int> dfs();
 	void rdfs(std::unordered_set<int>& visited, int currCoord);
-	std::vector<int> bfs();
+	std::vector<int> bfs(wxButton** btn);
 };
 

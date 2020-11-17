@@ -142,7 +142,8 @@ std::vector<int> ShortestPath::dijkstra()
 
 std::vector<int> ShortestPath::astar()
 {
-	return bfs();
+	std::vector<int> t;
+	return t;
 }
 
 std::vector<int> ShortestPath::dfs()
@@ -231,11 +232,12 @@ void ShortestPath::rdfs(std::unordered_set<int>& visited, int currCoord)
 	}
 }
 
-std::vector<int> ShortestPath::bfs()
+std::vector<int> ShortestPath::bfs(wxButton** btn)
 {
 	std::vector<int> coord;
 	std::queue<int> q;
 	std::unordered_set<int> visited, frontier;
+
 	q.push(src_.getCoord());
 	visited.insert(src_.getCoord());
 	while (!q.empty())
@@ -250,6 +252,9 @@ std::vector<int> ShortestPath::bfs()
 			if (isInsideGrid(temp.getX(), temp.getY()) && visited.insert(currentNode).second)
 			{
 				frontier.insert(currentNode);
+				// Edit to have model view controller!
+				btn[currentNode]->SetOwnBackgroundColour("Blue");
+				btn[currentNode]->Enable(false);
 				q.push(currentNode);
 				path_[currentNode] = front;
 			}

@@ -149,7 +149,7 @@ void cMain::runAlgorithm()
 		{
 			algoName = "BFS";
 			algoColor = new wxColour("Yellow");
-			path = sp.bfs();
+			path = sp.bfs(btn);
 			break;
 		}
 		case DFS:
@@ -177,7 +177,7 @@ void cMain::runAlgorithm()
 		{
 			algoName = "BFS";
 			algoColor = new wxColour("Yellow");
-			path = sp.bfs();
+			path = sp.bfs(btn);
 			break;
 		}
 	}
