@@ -50,10 +50,11 @@ public:
 	void setBFS(wxCommandEvent &evt);
 	void setDijkstra(wxCommandEvent &evt);
 	void setASTAR(wxCommandEvent &evt);
+	void setBlocks(wxCommandEvent &evt);
 
 	wxMenuBar *m_pMenuBar;
 	wxMenu *m_pFileMenu;
-	wxMenu *m_pHelpMenu;
+	wxMenu *m_pOtherMenu;
 
 
 protected:

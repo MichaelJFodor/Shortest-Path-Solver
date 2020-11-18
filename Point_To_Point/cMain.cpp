@@ -6,6 +6,9 @@ wxBEGIN_EVENT_TABLE(cMain, wxFrame) // Name of class, and base class
 	EVT_MENU(101, setDFS)
 	EVT_MENU(102, setDijkstra)
 	EVT_MENU(103, setASTAR)
+	//EVT_MENU(105, setStart)
+	//EVT_MENU(106, setTarget)
+	EVT_MENU(106, setBlocks)
 wxEND_EVENT_TABLE()
 
 #pragma region overload
@@ -40,14 +43,20 @@ void cMain::InitStatusBar()
 	m_pMenuBar = new wxMenuBar();
 	// File Menu
 	m_pFileMenu = new wxMenu();
+	m_pOtherMenu = new wxMenu();
 	m_pFileMenu->Append(100, _T("&BFS"));
 	m_pFileMenu->Append(101, _T("&DFS"));
 	m_pFileMenu->Append(102, _T("&Dijkstra"));
 	m_pFileMenu->Append(103, _T("&A*"));
 	m_pFileMenu->AppendSeparator();
 	m_pFileMenu->Append(wxID_EXIT, _T("&Quit"));
+	m_pOtherMenu->Append(104, _T("&Set Start"));
+	m_pOtherMenu->Append(105, _T("&Set Target"));
+	m_pOtherMenu->AppendSeparator();
+	m_pOtherMenu->Append(106, _T("&Set Blockage"));
 
 	m_pMenuBar->Append(m_pFileMenu, _T("&Change Algorithm"));
+	m_pMenuBar->Append(m_pOtherMenu, _T("&Set Blocks"));
 	SetMenuBar(m_pMenuBar);
 
 	// Set Algorithm
@@ -240,6 +249,10 @@ void cMain::setDijkstra(wxCommandEvent &evt)
 void cMain::setASTAR(wxCommandEvent &evt)
 {
 	algo = ASTAR;
+}
+
+void cMain::setBlocks(wxCommandEvent &evt)
+{
 }
 
 # pragma endregion
