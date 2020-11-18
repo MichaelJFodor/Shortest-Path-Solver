@@ -4,6 +4,7 @@
 class ShortestPath
 {
 private:
+	std::unordered_set<int> blockage_;
 	std::map<int, int> path_;
 	std::vector<int> dataGrid_;
 	int width_;
@@ -17,13 +18,15 @@ public:
 	
 	// Setters
 	void setWidth(int width);
+	void setBlockage(std::unordered_set<int> blockage);
 	void setCells(cell &src, cell &tgt);
 	void setGrid(std::vector<int> dataGrid);
 
 	// Methods
 	std::vector<int> extractBfsPath(cell& temp);
 	int initNode(cell& temp, int front, int i);
-	bool isInsideGrid(int i, int j);
+	// bool isInsideGrid(int i, int j);
+	bool isInsideGrid(int coord);
 
 	std::vector<int> dijkstra();
 	std::vector<int> astar();

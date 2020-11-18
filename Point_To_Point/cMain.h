@@ -29,6 +29,8 @@ public:
 
 	// Shortest Path
 	enum algorithm {BFS, DFS, DIJKSTRA, ASTAR} algo;
+	bool isBlock = false;
+	std::unordered_set<int> blockage;
 	void runAlgorithm();
 	cell *source = nullptr;
 	cell *target = nullptr;

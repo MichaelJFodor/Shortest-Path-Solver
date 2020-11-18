@@ -65,7 +65,7 @@ void cMain::InitStatusBar()
 
 void cMain::generateDataValues()
 {
-	srand(time(NULL));
+	/*srand(time(NULL));
 	int val = 0;
 	for (int i = 0; i < nFieldWidth; i++)
 	{
@@ -75,10 +75,24 @@ void cMain::generateDataValues()
 			dataGrid.push_back(val);
 		}
 	}
+	*/
+	for (int m = 0; m < nFieldHeight; m++)
+	{
+		blockage.insert(m * nFieldWidth - 1);
+		blockage.insert(m * nFieldWidth + nFieldWidth);
+	}
+	for (int n = 0; n < nFieldWidth; n++)
+	{
+		blockage.insert(-1 * nFieldWidth + n);
+		blockage.insert(nFieldHeight * nFieldWidth + n);
+	}
+	
+
 }
 
 void cMain::createButtonGrid()
 {
+	generateDataValues();
 	btn = new wxButton*[nFieldWidth * nFieldHeight];
 	wxGridSizer *grid = new wxGridSizer(nFieldWidth, nFieldHeight, 0, 0);
 	nField = new int[nFieldWidth * nFieldHeight];
@@ -92,7 +106,7 @@ void cMain::createButtonGrid()
 			grid->Add(btn[m * nFieldWidth + n], 1, wxEXPAND | wxALL);
 
 			btn[m * nFieldHeight + n]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonClicked, this);
-			nField[m * nFieldWidth + n] = 0;
+			//nField[m * nFieldWidth + n] = 0;
 		}
 	}
 
@@ -150,10 +164,11 @@ void cMain::runAlgorithm()
 	std::string algoName = "";
 	wxColour* algoColor;
 	std::vector<int> path;
-
-	list = new wxListBox(this, wxID_ANY, wxPoint(10, 100), wxSize(100, 100));
+	sp.setBlockage(blockage);
+	//list = new wxListBox(this, wxID_ANY, wxPoint(10, 100), wxSize(100, 100));
 	switch (algo)
 	{
+		
 		case BFS:
 		{
 			algoName = "BFS";
@@ -196,7 +211,7 @@ void cMain::runAlgorithm()
 		btn[e]->SetOwnBackgroundColour(*algoColor);
 		btn[e]->SetLabel(algoName);
 		btn[e]->Enable(false);
-		list->AppendString(std::to_string(e));
+		//list->AppendString(std::to_string(e));
 	}
 }
 
@@ -209,22 +224,30 @@ void cMain::OnButtonClicked(wxCommandEvent &evt)
 	int y = (evt.GetId() - 10000) / nFieldHeight;
 	cell* temp = new cell(x, y, bFirstClick);
 	temp->calculateCoord(nFieldWidth);
-	temp->getCoord();
-	
-	if (bFirstClick) 
-		setSourceData(*temp);
-	else
-		setTargetData(*temp);
-	
-	if (bLastClick)
+	if (!isBlock) 
 	{
-		sp.setWidth(nFieldWidth);
-		sp.setCells(*source, *target);
-		sp.setGrid(dataGrid);
+		if (bFirstClick) 
+			setSourceData(*temp);
+		else
+			setTargetData(*temp);
+	
+		if (bLastClick)
+		{
+			sp.setWidth(nFieldWidth);
+			sp.setCells(*source, *target);
+			sp.setGrid(dataGrid);
 
-		runAlgorithm();
-		delete temp;
-	}	
+			runAlgorithm();
+			delete temp;
+		}	
+	}
+	else
+	{
+		int cell = temp->getCoord();
+		blockage.insert(cell);
+		btn[cell]->SetBackgroundColour("Black");
+		btn[cell]->Enable(false);	
+	}
 
 	evt.Skip();
 }
@@ -233,26 +256,31 @@ void cMain::OnButtonClicked(wxCommandEvent &evt)
 // Status Bar Options
 void cMain::setBFS(wxCommandEvent &evt)
 {
+	isBlock = false;
 	algo = BFS;
 }
 
 void cMain::setDFS(wxCommandEvent &evt)
 {
+	isBlock = false;
 	algo = DFS;
 }
 
 void cMain::setDijkstra(wxCommandEvent &evt)
 {
+	isBlock = false;
 	algo = DIJKSTRA;
 }
 
 void cMain::setASTAR(wxCommandEvent &evt)
 {
+	isBlock = false;
 	algo = ASTAR;
 }
 
 void cMain::setBlocks(wxCommandEvent &evt)
 {
+	isBlock = true;
 }
 
 # pragma endregion
