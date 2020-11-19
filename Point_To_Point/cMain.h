@@ -5,7 +5,6 @@
 #include "wx/wx.h"
 #include "wx/wxprec.h"
 
-// Add black boxes for illegal cells
 // Create Dijkstra and A* algorithms
 // Optimize DFS a little
 
@@ -44,7 +43,7 @@ public:
 	wxColour* lastColor = new wxColour("Red");
 
 	// GUI Methods
-	void generateDataValues();
+	void setBounds();
 	void InitStatusBar();
 	void createButtonGrid();
 	void OnButtonClicked(wxCommandEvent &evt);

@@ -63,19 +63,8 @@ void cMain::InitStatusBar()
 	algorithm algo = BFS;
 }
 
-void cMain::generateDataValues()
+void cMain::setBounds()
 {
-	/*srand(time(NULL));
-	int val = 0;
-	for (int i = 0; i < nFieldWidth; i++)
-	{
-		for (int j = 0; j < nFieldHeight; j++)
-		{
-			val = (rand() % 101) + 1;
-			dataGrid.push_back(val);
-		}
-	}
-	*/
 	for (int m = 0; m < nFieldHeight; m++)
 	{
 		blockage.insert(m * nFieldWidth - 1);
@@ -86,13 +75,11 @@ void cMain::generateDataValues()
 		blockage.insert(-1 * nFieldWidth + n);
 		blockage.insert(nFieldHeight * nFieldWidth + n);
 	}
-	
-
 }
 
 void cMain::createButtonGrid()
 {
-	generateDataValues();
+	setBounds();
 	btn = new wxButton*[nFieldWidth * nFieldHeight];
 	wxGridSizer *grid = new wxGridSizer(nFieldWidth, nFieldHeight, 0, 0);
 	nField = new int[nFieldWidth * nFieldHeight];
@@ -102,11 +89,8 @@ void cMain::createButtonGrid()
 		for (int m = 0; m < nFieldHeight; m++)
 		{
 			btn[m * nFieldHeight + n] = new wxButton(this, 10000 + (m * nFieldWidth + n));
-			//btn[m * nFieldHeight + n]->SetLabel(std::to_string(dataGrid[m * nFieldHeight + n]));
 			grid->Add(btn[m * nFieldWidth + n], 1, wxEXPAND | wxALL);
-
 			btn[m * nFieldHeight + n]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonClicked, this);
-			//nField[m * nFieldWidth + n] = 0;
 		}
 	}
 
