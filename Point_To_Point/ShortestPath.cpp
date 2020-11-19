@@ -66,7 +66,6 @@ int ShortestPath::initNode(cell& temp, int front, int i)
 	return temp.getCoord();
 }
 
-//bool ShortestPath::isInsideGrid(int i, int j)
 bool ShortestPath::isInsideGrid(int coord)
 {
 	//return (i >= 0 && i < width_ && j >= 0 && j < width_);
@@ -120,7 +119,6 @@ std::vector<int> ShortestPath::dijkstra()
 			temp.calculateCoord(width_);
 			int v = temp.getCoord();
 			S.insert(v);
-			//if (isInsideGrid(x, y))
 			if (isInsideGrid(v))
 			{
 				int dist = cost[u] + dataGrid_[v];
@@ -199,7 +197,6 @@ void ShortestPath::rdfs(std::unordered_set<int>& visited, int currCoord)
 		temp.setX(currX);
 		temp.setY(currY);
 		temp.calculateCoord(width_);
-		//if (visited.insert(temp.getCoord()).second && isInsideGrid(currX, currY))
 		if (visited.insert(temp.getCoord()).second && isInsideGrid(temp.getCoord()))
 		{
 			rdfs(visited, temp.getCoord());

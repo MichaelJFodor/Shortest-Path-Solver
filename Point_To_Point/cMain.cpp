@@ -145,9 +145,6 @@ void cMain::setTargetData(cell &temp)
 
 void cMain::runAlgorithm()
 {
-	
-	
-	
 	sp.setBlockage(blockage);
 	sp.setWidth(nFieldWidth);
 	sp.setCells(*source, *target);
