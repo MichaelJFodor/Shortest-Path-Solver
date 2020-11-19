@@ -18,8 +18,11 @@ public:
 	// GUI
 	wxListBox* list;
 	wxButton **btn;
+	wxColour* algoColor;
+	wxColour* startColor = new wxColour("Green");
+	wxColour* lastColor = new wxColour("Red");
 
-	int nFieldWidth = 40;
+	int nFieldWidth = 20;
 	int nFieldHeight = nFieldWidth;
 	int *nField = nullptr;
 	bool bStartClick = true;
@@ -27,20 +30,20 @@ public:
 	bool bLastClick = false;
 
 	// Shortest Path
+	ShortestPath sp;
+	std::string algoName = "";
+	std::vector<int> path;
+	std::unordered_set<int> blockage;
 	enum algorithm {BFS, DFS, DIJKSTRA, ASTAR} algo;
 	bool isBlock = false;
-	std::unordered_set<int> blockage;
-	void runAlgorithm();
 	cell *source = nullptr;
 	cell *target = nullptr;
-	ShortestPath sp;
-	std::vector<int> dataGrid;
-
+	
 	// Methods
+	void runAlgorithm();
 	void setSourceData(cell &temp);
 	void setTargetData(cell &temp);
-	wxColour* startColor = new wxColour("Green");
-	wxColour* lastColor = new wxColour("Red");
+
 
 	// GUI Methods
 	void setBounds();

@@ -145,14 +145,14 @@ void cMain::setTargetData(cell &temp)
 
 void cMain::runAlgorithm()
 {
-	std::string algoName = "";
-	wxColour* algoColor;
-	std::vector<int> path;
+	
+	
+	
 	sp.setBlockage(blockage);
-	//list = new wxListBox(this, wxID_ANY, wxPoint(10, 100), wxSize(100, 100));
+	sp.setWidth(nFieldWidth);
+	sp.setCells(*source, *target);
 	switch (algo)
 	{
-		
 		case BFS:
 		{
 			algoName = "BFS";
@@ -195,7 +195,6 @@ void cMain::runAlgorithm()
 		btn[e]->SetOwnBackgroundColour(*algoColor);
 		btn[e]->SetLabel(algoName);
 		btn[e]->Enable(false);
-		//list->AppendString(std::to_string(e));
 	}
 }
 
@@ -217,9 +216,8 @@ void cMain::OnButtonClicked(wxCommandEvent &evt)
 	
 		if (bLastClick)
 		{
-			sp.setWidth(nFieldWidth);
-			sp.setCells(*source, *target);
-			sp.setGrid(dataGrid);
+
+			//sp.setGrid(dataGrid);
 
 			runAlgorithm();
 			delete temp;

@@ -258,17 +258,11 @@ std::vector<int> ShortestPath::bfs(wxButton** btn)
 			cell temp = NULL;
 			int currentNode = initNode(temp, front, i);
 
-			//if (isInsideGrid(temp.getX(), temp.getY()) && visited.insert(currentNode).second)
 			if (isInsideGrid(temp.getCoord()) && (visited.insert(currentNode).second))
 			{
 				btn[currentNode]->SetOwnBackgroundColour("Blue");
 				q.push(currentNode);
 				path_[currentNode] = front;
-				
-				// Edit to have model view controller!
-				
-				//frontier.insert(currentNode);
-				
 			}
 			
 			if (currentNode == tgt_.getCoord())
