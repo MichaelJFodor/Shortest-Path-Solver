@@ -6,8 +6,8 @@ wxBEGIN_EVENT_TABLE(cMain, wxFrame) // Name of class, and base class
 	EVT_MENU(101, setDFS)
 	EVT_MENU(102, setDijkstra)
 	EVT_MENU(103, setASTAR)
-	//EVT_MENU(105, setStart)
-	//EVT_MENU(106, setTarget)
+	EVT_MENU(104, setStart)
+	EVT_MENU(105, setTarget)
 	EVT_MENU(106, setBlocks)
 wxEND_EVENT_TABLE()
 
@@ -67,35 +67,42 @@ void cMain::setBounds()
 {
 	for (int m = 0; m < nFieldHeight; m++)
 	{
-		blockage.insert(m * nFieldWidth - 1);
-		blockage.insert(m * nFieldWidth + nFieldWidth);
+		//top
+		blockage.insert(m * nFieldHeight + 0);
+		//bottom
+		blockage.insert(m * nFieldHeight + (nFieldWidth - 1));
 	}
 	for (int n = 0; n < nFieldWidth; n++)
 	{
-		blockage.insert(-1 * nFieldWidth + n);
-		blockage.insert(nFieldHeight * nFieldWidth + n);
+		//left
+		blockage.insert(n);
+		//right
+		blockage.insert(nFieldHeight * nFieldHeight + (n - nFieldWidth));
 	}
 }
 
 void cMain::createButtonGrid()
 {
-	setBounds();
 	btn = new wxButton*[nFieldWidth * nFieldHeight];
 	wxGridSizer *grid = new wxGridSizer(nFieldWidth, nFieldHeight, 0, 0);
 	nField = new int[nFieldWidth * nFieldHeight];
+	int coord = 0;
 
 	for (int n = 0; n < nFieldWidth; n++)
 	{
 		for (int m = 0; m < nFieldHeight; m++)
 		{
-			btn[m * nFieldHeight + n] = new wxButton(this, 10000 + (m * nFieldWidth + n));
-			grid->Add(btn[m * nFieldWidth + n], 1, wxEXPAND | wxALL);
-			btn[m * nFieldHeight + n]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonClicked, this);
+			coord = m * nFieldHeight + n;
+			btn[coord] = new wxButton(this, 10000 + (m * nFieldWidth + n));
+			grid->Add(btn[coord], 1, wxEXPAND | wxALL);
+			btn[coord]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonClicked, this);
+			if (blockage.find(coord) != blockage.end())
+			{
+				btn[coord]->SetOwnBackgroundColour("Black");
+			}
 		}
 	}
-
 	this->SetSizer(grid);
-
 	grid->Layout();
 }
 
@@ -105,8 +112,8 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Shortest Path Solver - wx Widgets")
 	// Create Status Bar
 	InitStatusBar();
 
-	// Assign grid with numbers
-	//generateDataValues();
+	// Create boundaries
+	setBounds();
 
 	// Create grid of N x N buttons
 	createButtonGrid();
@@ -206,16 +213,17 @@ void cMain::OnButtonClicked(wxCommandEvent &evt)
 	temp->calculateCoord(nFieldWidth);
 	if (!isBlock) 
 	{
-		if (bFirstClick) 
+		if (bFirstClick)
+		{
 			setSourceData(*temp);
+		}
 		else
+		{
 			setTargetData(*temp);
+		}
 	
 		if (bLastClick)
 		{
-
-			//sp.setGrid(dataGrid);
-
 			runAlgorithm();
 			delete temp;
 		}	
@@ -262,4 +270,26 @@ void cMain::setBlocks(wxCommandEvent &evt)
 	isBlock = true;
 }
 
+void cMain::setStart(wxCommandEvent &evt)
+{
+	//int coord = 0;
+	//int x = (evt.GetId() - 10000) % nFieldWidth;
+	//int y = (evt.GetId() - 10000) / nFieldHeight;
+	//cell* temp = new cell(x, y, bFirstClick);
+	//temp->calculateCoord(nFieldWidth);
+	//setSourceData(*temp);
+	//delete temp;
+
+}
+
+void cMain::setTarget(wxCommandEvent &evt)
+{
+	//int coord = 0;
+	//int x = (evt.GetId() - 10000) % nFieldWidth;
+	//int y = (evt.GetId() - 10000) / nFieldHeight;
+	//cell* temp = new cell(x, y, bFirstClick);
+	//temp->calculateCoord(nFieldWidth);
+	//setSourceData(*temp);
+	//delete temp;
+}
 # pragma endregion

@@ -22,7 +22,7 @@ public:
 	wxColour* startColor = new wxColour("Green");
 	wxColour* lastColor = new wxColour("Red");
 
-	int nFieldWidth = 20;
+	int nFieldWidth = 40;
 	int nFieldHeight = nFieldWidth;
 	int *nField = nullptr;
 	bool bStartClick = true;
@@ -55,6 +55,8 @@ public:
 	void setDijkstra(wxCommandEvent &evt);
 	void setASTAR(wxCommandEvent &evt);
 	void setBlocks(wxCommandEvent &evt);
+	void setStart(wxCommandEvent &evt);
+	void setTarget(wxCommandEvent &evt);
 
 	wxMenuBar *m_pMenuBar;
 	wxMenu *m_pFileMenu;

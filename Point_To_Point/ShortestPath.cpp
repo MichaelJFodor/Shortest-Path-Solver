@@ -68,7 +68,6 @@ int ShortestPath::initNode(cell& temp, int front, int i)
 
 bool ShortestPath::isInsideGrid(int coord)
 {
-	//return (i >= 0 && i < width_ && j >= 0 && j < width_);
 	return blockage_.find(coord) == blockage_.end();
 }
 #pragma endregion
